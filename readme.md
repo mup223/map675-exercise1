@@ -4,8 +4,7 @@
 ### Mission Statment
 In this project my goal was to symbolize bike paths in Manhatten using a visual hierarchy like outlined in the lesson. I'm going to have a dark base map underneath the bike paths symbolized by class they represent.
 
-### Data Sources
-**NYC Open Data**
+### Data Source - NYC Open Data
 - Street centerlines with bike lane information: https://data.cityofnewyork.us/City-Government/NYC-Street-Centerline-CSCL-/exjm-f27b
 - NYC Borrough Polygons: https://data.cityofnewyork.us/City-Government/Borough-Boundaries/tqmj-j8zm
 
