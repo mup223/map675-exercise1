@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map 675 Exercise 1</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <style>
+        body,
+        #map {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+            margin: 0;
+            padding: 0;
+            background: rgba(0, 0, 0, 0.75);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+    <script>
+        const options = {
+            center: [40.7452411570555, -73.95395278930665],
+            zoom: 12,
+            minZoom: 9,
+            maxZoom: 16,
+            maxBounds: [
+                [40.867574213025414, -73.61389160156251],
+                [40.677513627085034, -74.27032470703126],
+            ],
+        };
+
+        const map = L.map('map', options);
+
+        const oneBike = {
+            color: '#b533dd',
+            opacity: 0.75
+        };
+
+        const twoBike = {
+            color: '#d4599f',
+            opacity: 0.75
+        };
+
+        const threeBike = {
+            color: '#dd4635',
+            opacity: 0.75
+        };
+
+        const otherBike = {
+            color: '#6d6d6d',
+            weight: 0.1,
+            opacity: 0.5
+        }
+
+        $.when(
+            $.getJSON('data/manhattan-streets1.json'),
+        ).done(function (manhattanStreets) {
+            //  note that we can access the GeoJSON data here
+            L.geoJSON(manhattanStreets, {
+                style: function (feature) {
+                    // shortcut to variable
+                    let type = feature.properties.bike_lane;
+
+                    console.log(type)
+
+                    // assign options
+                    return type === '1' ?
+                        oneBike :
+                        type === '2' ?
+                        twoBike :
+                        type === '3' ?
+                        threeBike :
+                        otherBike;
+                },
+            }).addTo(map)
+        });
+
+        map.createPane('labels');
+        map.getPane('labels').style.zIndex = 650;
+        map.getPane('labels').style.pointerEvents = 'none';
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
+            attribution: '©OpenStreetMap, ©CartoDB',
+            pane: 'labels'
+        }).addTo(map);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png', {
+            attribution: '©OpenStreetMap, ©CartoDB'
+        }).addTo(map);
+        
+    </script>
+</body>
+
+</html>
