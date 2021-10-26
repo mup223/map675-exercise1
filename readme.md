@@ -16,3 +16,4 @@ In this project my goal was to symbolize bike paths in Manhatten using a visual 
     - `ogr2ogr -f "GeoJSON" -where "boro_name='Manhattan'" manhattan-borough.geojson boroughs.geojson`
 3. Now I'll clip the streets with the Manhattan-borough.geojson:
     - `ogr2ogr -clipsrc manhattan-borough.geojson -clipsrclayer geoexport manhattan-streets.geojson nycStreetCenterline-simplified.geojson nycStreetCenterline-simplified -f "GeoJSON"`
+4. The final step in this process is to create the web map. I decided to go with the Carto labels (similar to the exercise) and a dark base map. Some interesting challenges that arose in this process was adding an additional map pane for the hover labels, so they would be on top of the Carto labels, and struggling to get the order correct on the clipsrc OGR script. 
